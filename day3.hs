@@ -20,10 +20,10 @@ b2d = foldl' (\acc bit -> if bit then acc*2 + 1 else acc*2) 0
 
 main = do
   xs <- fmap B.unpack . B.lines <$> B.readFile "./day3input.txt"
-  -- putStrLn . pretty . fmap (uncurry (>)) $ common xs
-  -- putStrLn . pretty . fmap not . fmap (uncurry (>)) $ common xs
-  -- putStrLn $ gas O2 xs
-  -- putStrLn $ gas CO2 xs
+  putStrLn . pretty . fmap (uncurry (>)) $ common xs
+  putStrLn . pretty . fmap not . fmap (uncurry (>)) $ common xs
+  putStrLn $ gas O2 xs
+  putStrLn $ gas CO2 xs
   let gamma = b2d . fmap (uncurry (>)) $ common xs
       epsilon = b2d . fmap not . fmap (uncurry (>)) $ common xs
   print (gamma * epsilon)
