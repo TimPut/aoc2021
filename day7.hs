@@ -5,16 +5,13 @@ import System.Environment
 main = do
   (f:_) <- getArgs :: IO [String]
   xs <- fmap (\l -> (head l, length l)) . group . sort . parse <$> B.readFile f
-  print $ minimum $ zip (fmap (cost xs) [0..length xs]) [0..]
-  print $ minimum $ zip (fmap (cost' xs) [0..length xs]) [0..]
+  print $ solve p1 xs
+  print $ solve p2 xs
 
-cost xs n = sum $ fmap (\(p,c) -> c*abs (n-p)) xs
-cost' xs n = sum $ fmap (\(p,c) -> c*moveCost (abs (n-p))) xs
+solve p xs = minimum $ fmap (\n -> sum $ fmap (p n) xs) [0..length xs]
 
-moveCost n = n*(n+1) `div` 2 -- sum [1..n]
-
-unsafeReadInt bs = let Just parse = B.readInt bs in fst parse
-{-# INLINE unsafeReadInt #-}
+p1 n (p,c) = c*abs (n-p)
+p2 n (p,c) = let d = abs (n-p) in c*d*(d+1) `div` 2
 
 parse = unfoldr go
   where
