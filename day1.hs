@@ -11,4 +11,9 @@ main = do
 
   let windowed = foldr1 (zipWith (+)) . take 3 $ iterate tail xs
   B.putStr "Part two: "
-  B.putStrLn $ B.pack . show . length . filter (>0) $ zipWith (-) (tail windowed) windowed
+  -- B.putStrLn $ B.pack . show . length . filter (>0) $ zipWith (-) (tail windowed) windowed
+  B.putStrLn $ B.pack
+             . show
+             . length
+             . filter (>0)
+             $ zipWith (-) (drop 3 xs) xs
