@@ -11,7 +11,7 @@ main = do
       rules = M.fromList . fmap parseRule . tail . tail $ ls :: M.Map String Char
       polymer = M.fromListWith (+) $ zip (window . head $ ls) [1,1..]
 
-  forM [10,40,4000,40000] $ \n -> print
+  forM [10,40] $ \n -> print
     . (\cs -> last cs - head cs)
     . sort 
     . fmap snd
