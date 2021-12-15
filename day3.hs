@@ -1,5 +1,6 @@
 import qualified Data.ByteString.Char8 as B
 import Data.List
+import System.Environment   
 
 combine :: Int -> Char -> Int
 combine n '1' = n+1
@@ -19,7 +20,8 @@ common xs =
 b2d = foldl' (\acc bit -> if bit then acc*2 + 1 else acc*2) 0
 
 main = do
-  xs <- fmap B.unpack . B.lines <$> B.readFile "./day3input.txt"
+  (f:_) <- getArgs :: IO [String]
+  xs <- fmap B.unpack . B.lines <$> B.readFile f
   putStrLn . pretty . fmap (uncurry (>)) $ common xs
   putStrLn . pretty . fmap not . fmap (uncurry (>)) $ common xs
   putStrLn $ gas O2 xs

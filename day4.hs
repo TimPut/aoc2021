@@ -3,11 +3,14 @@ import Data.List
 import Data.List.Split
 import qualified Data.Set as S
 import Data.Maybe
+import System.Environment   
 
 main = do
-  (ns:xs) <- B.lines <$> B.readFile "./day4input.txt"
+  (f:_) <- getArgs :: IO [String]
+  (ns:xs) <- B.lines <$> B.readFile f
   let nums = parse ns
-      rows = fmap (fmap unsafeReadInt) . fmap B.words . tail <$> chunksOf 6 xs
+      boardSize = length . B.words $ (xs !! 2)
+      rows = fmap (fmap unsafeReadInt) . fmap B.words . tail <$> chunksOf (boardSize+1) xs
       cols = (fmap transpose rows)
       ls = zipWith (++) rows cols
       lineWinTimes = fmap (fmap (winTime nums)) ls :: [[Int]]
@@ -19,6 +22,7 @@ main = do
       (lastTime,lastBoard) = maximum . flip zip [0..] $ boardWinTimes
       leftover' = filter (\e -> not $ elem e (take lastTime nums)) (concat (ls !! (lastBoard)))
 
+  print boardSize
   print $ (sum leftover `div` 2)*(nums !! (firstTime-1))
   print $ (sum leftover' `div` 2)*(nums !! (lastTime-1))
 

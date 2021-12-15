@@ -19,7 +19,7 @@ pkgs.stdenv.mkDerivation rec {
   src = ./.;
   buildInputs = [
     (pkgs.haskell.packages.ghc884.ghcWithPackages (p: with p; [
-      vector QuickCheck parallel containers unordered-containers MemoTrie ghc-core split smallcheck 
+      vector QuickCheck parallel containers unordered-containers MemoTrie ghc-core split smallcheck fgl heaps
       # ghc-vis
     ]))
     pkgs.cabal-install

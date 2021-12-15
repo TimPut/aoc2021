@@ -1,5 +1,7 @@
 import qualified Data.ByteString.Char8 as B
 import Data.List
+import System.Environment   
+
 
 data Point = P Int Int
   deriving (Show, Eq, Ord)
@@ -26,10 +28,11 @@ fluff c = case c of
             '>' -> True
             otherwise -> False
 main = do
+  (f:_) <- getArgs :: IO [String]
   xs <- fmap (\[a,b,c,d] -> (P a b, P c d))
        . fmap (fmap unsafeReadInt)
        . fmap (filter (not . B.null))
-       . fmap (B.splitWith fluff) . B.lines <$> B.readFile "./day5input.txt"
+       . fmap (B.splitWith fluff) . B.lines <$> B.readFile f
   let orthos = filter (\l -> uncurry horz l || uncurry vert l) xs
       diags = filter (\l -> uncurry diag l) xs
   print $ length . filter ((<) 1 . length) .  group . sort . concat $ fmap line orthos
