@@ -20,11 +20,11 @@ pkgs.stdenv.mkDerivation rec {
   buildInputs = [
     (pkgs.haskell.packages.ghc884.ghcWithPackages (p: with p; [
       vector QuickCheck parallel containers unordered-containers MemoTrie ghc-core split smallcheck fgl heaps
-      # ghc-vis
+      comonad adjunctions    # ghc-vis
     ]))
     pkgs.cabal-install
     pkgs.haskellPackages.haskell-language-server
-
+    pkgs.ghcid
 
   ];
   libPath = pkgs.lib.makeLibraryPath buildInputs;
